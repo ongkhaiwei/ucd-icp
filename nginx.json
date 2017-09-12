@@ -1,0 +1,387 @@
+{
+    "name": "nginx",
+    "description": "",
+    "created": 1505053991385,
+    "componentType": "STANDARD",
+    "ignoreQualifiers": 0,
+    "importAutomatically": false,
+    "useVfs": true,
+    "active": true,
+    "deleted": false,
+    "defaultVersionType": "FULL",
+    "cleanupDaysToKeep": 0,
+    "cleanupCountToKeep": 0,
+    "envPropDefs": [],
+    "resPropDefs": [],
+    "versionPropDefs": [],
+    "propSheetGroup": {"propSheets": [
+        {
+            "name": "template",
+            "properties": []
+        },
+        {
+            "name": "custom",
+            "properties": []
+        }
+    ]},
+    "processes": [
+        {
+            "name": "docker push to ICp",
+            "description": "",
+            "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+            "takesVersion": true,
+            "inventoryActionType": "ADD",
+            "status": "Active",
+            "configActionType": "ADD",
+            "active": true,
+            "path": "components\/3bf22496-5265-4857-ac6b-e7c7734ab456\/processes\/9df75bda-080a-45e6-9628-e8bf4dfa77b0",
+            "deleted": false,
+            "propDefs": [],
+            "rootActivity": {
+                "edges": [
+                    {
+                        "to": "Pull Docker Image",
+                        "type": "ALWAYS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Docker Login",
+                        "from": "Pull Docker Image",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Push Docker Image",
+                        "from": "Tag Docker Image",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Tag Docker Image",
+                        "from": "Docker Login",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "1d219db98451b018cf66eea3e41580",
+                        "from": "Push Docker Image",
+                        "type": "SUCCESS",
+                        "value": ""
+                    }
+                ],
+                "offsets": [
+                    {
+                        "name": "Tag Docker Image",
+                        "x": -100,
+                        "y": 330,
+                        "h": 70,
+                        "w": 250
+                    },
+                    {
+                        "name": "Push Docker Image",
+                        "x": -96,
+                        "y": 435,
+                        "h": 70,
+                        "w": 260
+                    },
+                    {
+                        "name": "Docker Login",
+                        "x": -70,
+                        "y": 220,
+                        "h": 70,
+                        "w": 220
+                    },
+                    {
+                        "name": "1d219db98451b018cf66eea3e41580",
+                        "x": -10,
+                        "y": 540,
+                        "h": 80,
+                        "w": 120
+                    },
+                    {
+                        "name": "Pull Docker Image",
+                        "x": -47,
+                        "y": 115,
+                        "h": 70,
+                        "w": 250
+                    }
+                ],
+                "layoutMode": "manual",
+                "type": "graph",
+                "name": "baefed5e-c098-46e0-ac05-de69e371c799",
+                "children": [
+                    {
+                        "type": "finish",
+                        "name": "1d219db98451b018cf66eea3e41580",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "pluginVersion": 8,
+                        "commandName": "Pull Docker Image",
+                        "pluginName": "Docker",
+                        "properties": {
+                            "image": "nginx",
+                            "commandOptions": "",
+                            "globalOptions": "",
+                            "envVars": ""
+                        },
+                        "type": "plugin",
+                        "name": "Pull Docker Image",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "pluginVersion": 8,
+                        "commandName": "Docker Login",
+                        "pluginName": "Docker",
+                        "properties": {
+                            "registry": "master.cfc:8500",
+                            "dockerRegistryUserName": "kwadmin",
+                            "dockerRegistryUserPassword": "crypt_v1{AES\/CBC\/PKCS5Padding|aes128keyrufg|AQsvvZT3PQhUParDlyqhlg==|29MdKSPj\/Cpo\/bTpMmWe1Q==}",
+                            "dockerRegistryUserEmail": "",
+                            "globalOptions": "",
+                            "envVars": "",
+                            "awsCli": "",
+                            "region": ""
+                        },
+                        "type": "plugin",
+                        "name": "Docker Login",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "pluginVersion": 8,
+                        "commandName": "Tag Docker Image",
+                        "pluginName": "Docker",
+                        "properties": {
+                            "image": "nginx",
+                            "tag": "master.cfc:8500\/kw\/nginx:1.0",
+                            "commandOptions": "",
+                            "globalOptions": "",
+                            "envVars": ""
+                        },
+                        "type": "plugin",
+                        "name": "Tag Docker Image",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "pluginVersion": 8,
+                        "commandName": "Push Docker Image",
+                        "pluginName": "Docker",
+                        "properties": {
+                            "image": "master.cfc:8500\/kw\/nginx:1.0",
+                            "commandOptions": "",
+                            "globalOptions": "",
+                            "envVars": ""
+                        },
+                        "type": "plugin",
+                        "name": "Push Docker Image",
+                        "children": []
+                    }
+                ]
+            }
+        },
+        {
+            "name": "kubernetes deployment",
+            "description": "",
+            "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+            "takesVersion": true,
+            "inventoryActionType": "ADD",
+            "status": "Active",
+            "configActionType": "ADD",
+            "active": true,
+            "path": "components\/3bf22496-5265-4857-ac6b-e7c7734ab456\/processes\/fa87e11d-9401-4089-90da-5bb6a04cefb8",
+            "deleted": false,
+            "propDefs": [],
+            "rootActivity": {
+                "edges": [
+                    {
+                        "to": "4c1ac5c44bf8c9de2bb5ff1b626f55",
+                        "from": "Apply Resources",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Create Resources",
+                        "from": "Export Kube Client Config",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Export Kube Client Config",
+                        "from": "Download Artifacts",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Apply Resources",
+                        "from": "Create Resources",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Download Artifacts",
+                        "type": "ALWAYS",
+                        "value": ""
+                    }
+                ],
+                "offsets": [
+                    {
+                        "name": "Download Artifacts",
+                        "x": -75,
+                        "y": 127,
+                        "h": 70,
+                        "w": 260
+                    },
+                    {
+                        "name": "Apply Resources",
+                        "x": -89,
+                        "y": 410,
+                        "h": 70,
+                        "w": 250
+                    },
+                    {
+                        "name": "Export Kube Client Config",
+                        "x": -75,
+                        "y": 220,
+                        "h": 70,
+                        "w": 260
+                    },
+                    {
+                        "name": "4c1ac5c44bf8c9de2bb5ff1b626f55",
+                        "x": 1,
+                        "y": 540,
+                        "h": 80,
+                        "w": 120
+                    },
+                    {
+                        "name": "Create Resources",
+                        "x": -89,
+                        "y": 310,
+                        "h": 70,
+                        "w": 250
+                    }
+                ],
+                "layoutMode": "manual",
+                "type": "graph",
+                "name": "f288bae2-47e1-466e-b30d-677553f46ac9",
+                "children": [
+                    {
+                        "type": "finish",
+                        "name": "4c1ac5c44bf8c9de2bb5ff1b626f55",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "pluginVersion": 28,
+                        "commandName": "Download Artifacts",
+                        "pluginName": "IBM UrbanCode Deploy Versioned File Storage",
+                        "properties": {
+                            "directoryOffset": ".",
+                            "artifactSetBaseDir": "",
+                            "fileIncludePatterns": "**\/*",
+                            "fileExcludePatterns": "",
+                            "syncMode": "true",
+                            "fullVerification": "true",
+                            "setFileExecuteBits": "false",
+                            "verifyFileIntegrity": "false",
+                            "versionId": "${p:version.id}",
+                            "serverUrl": "${p:server.url}",
+                            "compId": "${p:component.id}",
+                            "resId": "${p:resource.id}",
+                            "charset": "",
+                            "label": ""
+                        },
+                        "type": "plugin",
+                        "name": "Download Artifacts",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "pluginVersion": 9,
+                        "commandName": "Shell",
+                        "pluginName": "Shell",
+                        "properties": {
+                            "directoryOffset": ".",
+                            "shellInterpreter": "",
+                            "scriptBody": "kubectl config set-cluster cfc --server=https:\/\/192.168.64.XXX:8001 --insecure-skip-tls-verify=true\nkubectl config set-context cfc --cluster=cfc\nkubectl config set-credentials user --token=TOKEN\nkubectl config set-context cfc --user=user --namespace=default\nkubectl config use-context cfc",
+                            "runAsDaemon": "false",
+                            "outputFile": ""
+                        },
+                        "type": "plugin",
+                        "name": "Export Kube Client Config",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "pluginVersion": 10,
+                        "commandName": "Create Resources",
+                        "pluginName": "Kubernetes",
+                        "properties": {
+                            "url": "",
+                            "username": "",
+                            "password": "crypt_v1{AES\/CBC\/PKCS5Padding|aes128keyrufg|LYxnP\/0dNkKvMZg8wK0N0g==|wwd+11rNZmOEALeW3tO35A==}",
+                            "namespace": "",
+                            "path": "",
+                            "globals": "",
+                            "flags": "",
+                            "filename": "deploy.yaml"
+                        },
+                        "type": "plugin",
+                        "name": "Create Resources",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "pluginVersion": 10,
+                        "commandName": "Apply Resources",
+                        "pluginName": "Kubernetes",
+                        "properties": {
+                            "url": "",
+                            "username": "",
+                            "password": "crypt_v1{AES\/CBC\/PKCS5Padding|aes128keyrufg|w6G5J+rtTF2XnbSK3VvfIA==|EIOjEetE8VDYD57jq\/SrYQ==}",
+                            "namespace": "",
+                            "path": "",
+                            "globals": "",
+                            "flags": "",
+                            "filename": "service.yaml"
+                        },
+                        "type": "plugin",
+                        "name": "Apply Resources",
+                        "children": []
+                    }
+                ]
+            }
+        }
+    ],
+    "configTemplates": [],
+    "genericProcesses": [],
+    "teamMappings": [],
+    "tags": []
+}

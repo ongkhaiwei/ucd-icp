@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kw-nginx-service
+  labels:
+    run: kw-nginx-service
+spec:
+  selector:
+    app: kw-nginx
+  type: NodePort
+  ports:
+   - protocol: TCP
+     port: 80
+     nodePort: 32000

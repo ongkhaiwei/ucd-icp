@@ -1,0 +1,16 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: kw-nginx
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: kw-nginx
+    spec:
+      containers:
+      - name: kw-nginx-container
+        image: master.cfc:8500/kw/nginx:1.0
+        ports:
+        - containerPort: 80
